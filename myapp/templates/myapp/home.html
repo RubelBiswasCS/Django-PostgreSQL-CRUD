@@ -1,0 +1,28 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+    <h1>Most Influential People in Tech</h1>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Organization</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in people %}
+            <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.role}}</td>
+                <td>{{i.organization}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    
+   
+
+{% endblock %}
