@@ -2,25 +2,72 @@
 
 {% block content %}
 
-    <h1>Most Influential People in Tech</h1>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Organization</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in people %}
-            <tr>
-                <td>{{i.name}}</td>
-                <td>{{i.role}}</td>
-                <td>{{i.organization}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <section class="form-section">
+            <h3>Add Records</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.errors }}
+                        <div class="dj-form">
+                           <div class="form-l">
+                            {{ field.label_tag }}
+                           </div >
+                           <div class="form-f">
+                            {{ field }}
+                           </div>
+        
+                        </div>
+                        
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <input class="btn-submit" type='submit' value="Submit">
+                </fieldset>
+            </form>
+            
+        </section>
+
+        <section class="data-section">
+            <h1>Most Influential People in Tech</h1>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Organization</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in people %}
+                    <tr>
+                        <td>{{i.name}}</td>
+                        <td>{{i.role}}</td>
+                        <td>{{i.organization}}</td>
+                        <td class="actions">
+                            <button class="btn" type="submit" >Update
+
+                            </button>
+                            
+
+                            <form method="POST" action="{% url 'delete-view' i.pk %}">
+                                {% csrf_token %}
+                                <button class="btn danger" type="submit" >Delete
+
+                            </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
     
     
    
