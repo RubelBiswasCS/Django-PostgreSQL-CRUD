@@ -4,7 +4,7 @@
 
     <div class="container">
         <section class="form-section">
-            <h3>Add Records</h3>
+            <h3>Add/Update Record</h3>
             <form method="POST">
                 {% csrf_token %}
                 <fieldset>
@@ -26,7 +26,13 @@
                         {% endif %}
                     </div>
                     {% endfor %}
-                    <input class="btn-submit" type='submit' value="Submit">
+                    <!-- <input class="btn-submit" type='submit' value="Submit"> -->
+
+                    <div class="dj-form">
+                        
+                        <a style="text-decoration: none; text-align: center; color: black;" href="{% url 'home' %}" class="btn">Clear</a>
+                        <input class="btn" type='submit' value="Submit">
+                    </div>
                 </fieldset>
             </form>
             
@@ -49,20 +55,21 @@
                         <td>{{i.name}}</td>
                         <td>{{i.role}}</td>
                         <td>{{i.organization}}</td>
-                        <td class="actions">
-                            <form action="{% url 'update-view' i.pk %}">
+                        <td >
+                            <div class="actions">
+                                <form action="{% url 'update-view' i.pk %}">
                                 
-                                <button class="btn" type="submit" >Update
-
-                            </button>
-                            </form>
-
-                            <form method="POST" action="{% url 'delete-view' i.pk %}">
-                                {% csrf_token %}
-                                <button class="btn danger" type="submit" >Delete
-
-                            </button>
-                            </form>
+                                    <button class="btn" name="update" type="submit" >Update
+                                    </button>
+                                </form>
+    
+                                <form method="POST" action="{% url 'delete-view' i.pk %}">
+                                    {% csrf_token %}
+                                    <button class="btn danger" type="submit" >Delete
+    
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     {% endfor %}
@@ -70,6 +77,9 @@
             </table>
         </section>
 
+       
+        
+            
        
     </div>
     

@@ -39,22 +39,44 @@ def delete_view(request,pk):
 
     return render(request, template_name,context) 
 
+# def update_view(request,pk):
+#     people = People.objects.all()
+
+#     p = People.objects.get(pk=pk)
+    
+#     if request.method == 'POST':
+#         u_form = RecordUpdateForm(request.POST,instance=p)
+#         if u_form.is_valid():
+#             u_form.save()
+#             return redirect('home')
+
+#     else:
+#         u_form = RecordUpdateForm(instance=p)
+    
+#     template_name="myapp/home.html"
+#     context={
+#         'people':people,
+#         'u_form':u_form,
+#     }
+#     return render(request, template_name,context)
+
 def update_view(request,pk):
+    people = People.objects.all()
+
     p = People.objects.get(pk=pk)
     
     if request.method == 'POST':
-        u_form = RecordUpdateForm(request.POST,instance=p)
-        if u_form.is_valid():
-            u_form.save()
+        form = RecordUpdateForm(request.POST,instance=p)
+        if form.is_valid():
+            form.save()
             return redirect('home')
 
     else:
-        u_form = RecordUpdateForm(instance=p)
+        form = RecordUpdateForm(instance=p)
     
-    template_name="myapp/update_record.html"
+    template_name="myapp/home.html"
     context={
-        
-        'u_form':u_form,
+        'people':people,
+        'form':form,
     }
     return render(request, template_name,context)
-
