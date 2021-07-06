@@ -46,7 +46,7 @@ footer{
     justify-content: center;
     align-items: center;
     width: 50%;
-    background-color: rgb(223, 198, 221);
+    /* background-color: rgb(223, 198, 221); */
 }
 .form-section{
     display: flex;
@@ -54,7 +54,7 @@ footer{
     justify-content: flex-start;
     align-items: center;
     width: 45%;
-    background-color: bisque;
+    /* background-color: bisque; */
 }
 form{
     display: flex;
