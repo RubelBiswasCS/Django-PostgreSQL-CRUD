@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import People
-from .forms import RecordForm
+from .forms import RecordForm, RecordUpdateForm
 
 
 def home(request):
@@ -39,6 +39,22 @@ def delete_view(request,pk):
 
     return render(request, template_name,context) 
 
-
+def update_view(request,pk):
+    p = People.objects.get(pk=pk)
     
+    if request.method == 'POST':
+        u_form = RecordUpdateForm(request.POST,instance=p)
+        if u_form.is_valid():
+            u_form.save()
+            return redirect('home')
+
+    else:
+        u_form = RecordUpdateForm(instance=p)
+    
+    template_name="myapp/update_record.html"
+    context={
+        
+        'u_form':u_form,
+    }
+    return render(request, template_name,context)
 

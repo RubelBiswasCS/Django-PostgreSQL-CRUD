@@ -50,10 +50,12 @@
                         <td>{{i.role}}</td>
                         <td>{{i.organization}}</td>
                         <td class="actions">
-                            <button class="btn" type="submit" >Update
+                            <form action="{% url 'update-view' i.pk %}">
+                                {% csrf_token %}
+                                <button class="btn" type="submit" >Update
 
                             </button>
-                            
+                            </form>
 
                             <form method="POST" action="{% url 'delete-view' i.pk %}">
                                 {% csrf_token %}
@@ -67,6 +69,8 @@
                 </tbody>
             </table>
         </section>
+
+       
     </div>
     
     
