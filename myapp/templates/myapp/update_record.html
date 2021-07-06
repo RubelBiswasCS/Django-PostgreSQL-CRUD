@@ -27,7 +27,15 @@
                         {% endif %}
                     </div>
                     {% endfor %}
-                    <input class="btn-submit" type='submit' value="Submit">
+                    <div class="dj-form">
+                        <form action="{% url 'home' %}">
+                            {% csrf_token %}
+                            <button class="btn" type="submit" >Back
+    
+                        </button>
+                        <input class="btn" type='submit' value="Submit">
+                    </div>
+                    
                 </fieldset>
             </form>
             
