@@ -33,6 +33,9 @@ footer{
     justify-content: flex-start;
     align-items: center;
 }
+h1{
+    font-size: 120%;
+}
 .container{
     display: flex;
     width: 100%;
@@ -156,4 +159,22 @@ tbody td{
 }
 .danger{
     background-color: rgb(204, 103, 103);
+}
+
+@media only screen and (max-width:720px) {
+    .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    .data-section{
+       
+        width: 95%;
+        /* background-color: rgb(223, 198, 221); */
+    }
+    .form-section{
+        width: 95%;
+        /* background-color: bisque; */
+    }
 }
