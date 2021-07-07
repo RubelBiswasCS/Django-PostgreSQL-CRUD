@@ -37,7 +37,7 @@ def delete_view(request,pk):
         p.delete()
         return redirect('home')
 
-    return render(request, template_name,context) 
+    return render(request)
 
 # def update_view(request,pk):
 #     people = People.objects.all()
