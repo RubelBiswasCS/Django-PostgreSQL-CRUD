@@ -49,8 +49,8 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for i in people %}
+                <tbody id="people-data">
+                    <!-- {% for i in people %}
                     <tr>
                         <td>{{i.name}}</td>
                         <td>{{i.role}}</td>
@@ -72,12 +72,44 @@
                             </div>
                         </td>
                     </tr>
-                    {% endfor %}
+                    {% endfor %} -->
                 </tbody>
             </table>
         </section>
 
-       
+       <script>
+           $(document).ready(function(){
+               setInterval(function(){
+                   $.ajax({
+                       method:'POST',
+                       url: "{% url 'people' %}",
+                       data : {
+                            csrfmiddlewaretoken: '{{csrf_token}}'
+                       },
+                       success:function(response){
+                        //    console.log("Success");
+                           $("#people-data").empty();
+                           for(var i in response.peoples){
+                               var temp = "<tr>"
+                        +"<td>"+response.peoples[i].name+"</td>"
+                        +"<td>"+response.peoples[i].role+"</td>"
+                        +"<td>"+response.peoples[i].organization+"</td>"
+                        +"<td>"+"TBA"+"</td>"
+                        +"</tr>";
+
+                        $("#people-data").append(temp);
+                           }
+
+                       },
+                       error:function(){
+                           console.log("An Error Occured");
+
+                       },
+                   });
+
+               },100);
+           });
+       </script>
         
             
        

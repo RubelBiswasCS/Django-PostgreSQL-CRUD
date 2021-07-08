@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import People
 from .forms import RecordForm, RecordUpdateForm
+from django.http import JsonResponse
 
 
 def home(request):
-    people = People.objects.all()
+    
     if request.method == 'POST':
         form =  RecordForm(request.POST)  
 
@@ -80,3 +81,12 @@ def update_view(request,pk):
         'form':form,
     }
     return render(request, template_name,context)
+
+def people(request):
+    peoples = People.objects.all()
+    
+    data={
+        'peoples':list(peoples.values()),
+    }
+    return JsonResponse(data)
+
