@@ -6,25 +6,7 @@ from django.http import JsonResponse
 
 def home(request):
     
-    if request.method == 'POST':
-        form =  RecordForm(request.POST)  
-
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            birthday = form.cleaned_data['birthday']
-            country = form.cleaned_data['country']
-            organization = form.cleaned_data['organization']
-            role = form.cleaned_data['role']
-
-            p = People(name=name, birthday=birthday, country=country, organization=organization,role=role)
-            p.save()
-
-            return redirect('home')
-
-    else:
-        form = RecordForm()
-    
-
+    form = RecordForm()
     template_name="myapp/home.html"
     context={
         'form':form,
@@ -90,3 +72,14 @@ def people(request):
     }
     return JsonResponse(data)
 
+def add_record(request):
+    # form = RecordForm()
+    if request.method == 'POST':
+        name = request.POST['name']
+        birthday = request.POST['birthday']
+        country = request.POST['country']
+        organization = request.POST['organization']
+        role = request.POST['role']
+
+        p = People(name=name, birthday=birthday, country=country, organization=organization,role=role)
+        p.save()

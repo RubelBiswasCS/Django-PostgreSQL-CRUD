@@ -5,7 +5,7 @@
     <div class="container">
         <section class="form-section">
             <h3>Add/Update Record</h3>
-            <form method="POST">
+            <form id="recordForm" method="POST">
                 {% csrf_token %}
                 <fieldset>
                     {% for field in form %}
@@ -87,7 +87,7 @@
                             csrfmiddlewaretoken: '{{csrf_token}}'
                        },
                        success:function(response){
-                        //    console.log("Success");
+                           console.log("Success get data");
                            $("#people-data").empty();
                            for(var i in response.peoples){
                                var temp = "<tr>"
@@ -102,12 +102,35 @@
 
                        },
                        error:function(){
-                           console.log("An Error Occured");
+                        //    console.log("An Error Occured");
 
                        },
                    });
 
-               },100);
+               },2000);
+           });
+
+           $(document).on("submit","#recordForm",function(e){
+               e.preventDefault();
+               $.ajax({
+                   method:"POST",
+                   url: "{% url 'add-record' %}",
+                   data:{
+                        name : $('#id_name').val(),
+                        birthday : $('#id_birthday').val(),
+                        country : $('#id_country').val(),
+                        organization : $('#id_organization').val(),
+                        role : $('#id_role').val(),
+                        csrfmiddlewaretoken: '{{ csrf_token}}',
+                   },
+                success: function(date){
+                    console.log('data successfully send');
+                },
+                error: function(){
+                    console.log("something went wrong");
+                },
+               });
+
            });
        </script>
         
