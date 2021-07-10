@@ -52,7 +52,7 @@ def update_view(request,pk):
         form = RecordUpdateForm(request.POST,instance=p)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            # return redirect('home')
 
     else:
         form = RecordUpdateForm(instance=p)

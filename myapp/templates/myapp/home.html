@@ -87,18 +87,41 @@
                             csrfmiddlewaretoken: '{{csrf_token}}'
                        },
                        success:function(response){
-                           console.log("Success get data");
+                        //    console.log("Success get data");
                            $("#people-data").empty();
                            for(var i in response.peoples){
-                               var temp = "<tr>"
-                        +"<td>"+response.peoples[i].name+"</td>"
-                        +"<td>"+response.peoples[i].role+"</td>"
-                        +"<td>"+response.peoples[i].organization+"</td>"
-                        +"<td>"+"TBA"+"</td>"
-                        +"</tr>";
+                            var temp = `<tr>
+                                <td>${response.peoples[i].name}</td>
+                                <td>${response.peoples[i].role}</td>
+                        <td>${response.peoples[i].organization}</td>
+                                <td>
+                                    <div class="actions">
+                                <form >
+                                    {% csrf_token %}
+                                    <button id="update" class="btn" name="update" type="button" 
+                                    value=${response.peoples[i].pk} >Update
+                                    </button>
+                                </form>
+    
+                                <form >
+                                    {% csrf_token %}
+                                    <button id="#delete" class="btn danger" type="submit" >Delete
+    
+                                    </button>
+                                </form>
+                            </div>
+                            </td>
+                            </tr>`;
+                            $("#people-data").append(temp);
+                        //        var temp = "<tr>"
+                        // +"<td>"+response.peoples[i].name+"</td>"
+                        // +"<td>"+response.peoples[i].role+"</td>"
+                        // +"<td>"+response.peoples[i].organization+"</td>"
+    
+                        // +"</tr>";
 
-                        $("#people-data").append(temp);
-                           }
+                        // $("#people-data").append(temp);
+                          }
 
                        },
                        error:function(){
@@ -124,7 +147,7 @@
                         csrfmiddlewaretoken: '{{ csrf_token}}',
                    },
                 success: function(date){
-                    console.log('data successfully send');
+                    // console.log('data successfully send');
                 },
                 error: function(){
                     console.log("something went wrong");
@@ -132,6 +155,28 @@
                });
 
            });
+        //    method for update record
+
+        $(document).on("click","#update",function(e){
+                var id = document.getElementById('update').value;
+               e.preventDefault();
+               $.ajax({
+                    method:"POST",
+                    url: "{% url 'update-view' pk=1 %}",
+                    data: {
+                        csrfmiddlewaretoken:'{{csrf_token}}',
+                    },
+                    success: function(){
+                console.log("Success update call");
+               },
+                    error: function(){
+                        console.log("error update call");
+                    },
+
+               });
+               
+           });
+          
        </script>
         
             
