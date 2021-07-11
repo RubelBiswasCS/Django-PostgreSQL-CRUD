@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import People
 from .forms import RecordForm, RecordUpdateForm
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 
 
 def home(request):
@@ -14,13 +14,21 @@ def home(request):
     }
     return render(request, template_name,context)            
 
-def delete_view(request,pk):
+def delete_view(request):
+    pk=request.POST['pk']
     p = People.objects.get(pk=pk)
-    if request.method == 'POST':
+    if request.method == 'POST':   
         p.delete()
-        return redirect('home')
-
-    return render(request)
+        #return JsonResponse()
+        # return redirect('home')
+    # data={
+    #     'peoples':list("list"),
+    # }
+    data={
+        'status':'ok',
+    }
+    return HttpResponse(data)
+    # return render(request)
 
 # def update_view(request,pk):
 #     people = People.objects.all()

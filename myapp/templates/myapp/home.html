@@ -105,7 +105,7 @@
     
                                 <form >
                                     {% csrf_token %}
-                                    <button id="#delete" class="btn danger" type="submit" >Delete
+                                    <button id="delete" class="btn danger" type="button" value="${response.peoples[i].id}">Delete
     
                                     </button>
                                 </form>
@@ -171,6 +171,32 @@
                },
                     error: function(){
                         console.log("error update call");
+                    },
+
+               });
+               
+           });
+
+           // method for delete record
+
+           $(document).on("click","#delete",function(e){
+                // var id = document.getElementById('delete').value;
+                // var val = $(this).val();
+                // console.log(val= "+ val type= "+typeof(val));
+               e.preventDefault();
+               $.ajax({
+                    method:"POST",
+                    url: "{% url 'delete-view'  %}",
+                    data: {
+                        csrfmiddlewaretoken:'{{csrf_token}}',
+                        pk :  $(this).val(),
+                    },
+                    success: function(){
+                console.log("success: delete call");
+               },
+                    error: function(){
+                        console.log("error: delete call");
+                        
                     },
 
                });
