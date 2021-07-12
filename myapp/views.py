@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import People
 from .forms import RecordForm, RecordUpdateForm
 from django.http import JsonResponse,HttpResponse
+import json
 
 
 def home(request):
@@ -51,26 +52,20 @@ def delete_view(request):
 #     }
 #     return render(request, template_name,context)
 
-def update_view(request,pk):
-    people = People.objects.all()
-
+def update_view(request):
+    pk = request.POST['pk']
     p = People.objects.get(pk=pk)
     
-    if request.method == 'POST':
-        form = RecordUpdateForm(request.POST,instance=p)
-        if form.is_valid():
-            form.save()
-            # return redirect('home')
-
-    else:
-        form = RecordUpdateForm(instance=p)
-    
-    template_name="myapp/home.html"
-    context={
-        'people':people,
-        'form':form,
+    data = {
+        'name':p.name,
+        'birthday':str(p.birthday),
+        'country':p.country,
+       'organization':p.organization,
+       'role':p.role,
     }
-    return render(request, template_name,context)
+    
+    response = json.dumps(data)
+    return HttpResponse(response)
 
 def people(request):
     peoples = People.objects.all()
@@ -91,3 +86,8 @@ def add_record(request):
 
         p = People(name=name, birthday=birthday, country=country, organization=organization,role=role)
         p.save()
+
+    data={
+        'status':'ok',
+    }
+    return HttpResponse(data)

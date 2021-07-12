@@ -31,7 +31,7 @@
                     <div class="dj-form">
                         
                         <a style="text-decoration: none; text-align: center; color: black;" href="{% url 'home' %}" class="btn">Clear</a>
-                        <input class="btn" type='submit' value="Submit">
+                        <input id="submit" class="btn" type='submit' value="Submit">
                     </div>
                 </fieldset>
             </form>
@@ -99,7 +99,7 @@
                                 <form >
                                     {% csrf_token %}
                                     <button id="update" class="btn" name="update" type="button" 
-                                    value=${response.peoples[i].pk} >Update
+                                    value="${response.peoples[i].id}" >Update
                                     </button>
                                 </form>
     
@@ -113,14 +113,7 @@
                             </td>
                             </tr>`;
                             $("#people-data").append(temp);
-                        //        var temp = "<tr>"
-                        // +"<td>"+response.peoples[i].name+"</td>"
-                        // +"<td>"+response.peoples[i].role+"</td>"
-                        // +"<td>"+response.peoples[i].organization+"</td>"
-    
-                        // +"</tr>";
-
-                        // $("#people-data").append(temp);
+                      
                           }
 
                        },
@@ -158,15 +151,24 @@
         //    method for update record
 
         $(document).on("click","#update",function(e){
-                var id = document.getElementById('update').value;
+                
                e.preventDefault();
                $.ajax({
                     method:"POST",
-                    url: "{% url 'update-view' pk=1 %}",
+                    url: "{% url 'update-view' %}",
                     data: {
+                        pk :$(this).val(),
                         csrfmiddlewaretoken:'{{csrf_token}}',
                     },
-                    success: function(){
+                    success: function(response){
+                        var myObj = JSON.parse(response);
+                        
+                        document.getElementById("id_name").defaultValue = myObj.name;
+                        document.getElementById("id_birthday").defaultValue = myObj.birthday; 
+                        document.getElementById("id_country").defaultValue = myObj.country; 
+                        document.getElementById("id_organization").defaultValue = myObj.organization; 
+                        document.getElementById("id_role").defaultValue = myObj.role; 
+                        console.log(myObj.name);
                 console.log("Success update call");
                },
                     error: function(){
