@@ -7,6 +7,7 @@ class RecordForm(forms.Form):
     country = forms.CharField(max_length=100)
     organization = forms.CharField(max_length=100)
     role = forms.CharField(max_length=100)
+    id = forms.IntegerField(widget = forms.HiddenInput(), required = False,label='',initial=-1)
 
 class RecordUpdateForm(ModelForm):
     class Meta:

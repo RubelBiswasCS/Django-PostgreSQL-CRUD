@@ -137,8 +137,14 @@
                         country : $('#id_country').val(),
                         organization : $('#id_organization').val(),
                         role : $('#id_role').val(),
+                        pk : $('#id_id').val(),
                         csrfmiddlewaretoken: '{{ csrf_token}}',
+
+                        
                    },
+                   
+                  
+
                 success: function(date){
                     // console.log('data successfully send');
                 },
@@ -151,7 +157,7 @@
         //    method for update record
 
         $(document).on("click","#update",function(e){
-                
+                var id = $(this).val();
                e.preventDefault();
                $.ajax({
                     method:"POST",
@@ -162,12 +168,21 @@
                     },
                     success: function(response){
                         var myObj = JSON.parse(response);
-                        
+
+                        document.getElementById("id_name").defaultValue = null;
+                        document.getElementById("id_birthday").defaultValue = null; 
+                        document.getElementById("id_country").defaultValue = null; 
+                        document.getElementById("id_organization").defaultValue = null; 
+                        document.getElementById("id_role").defaultValue = null; 
+
                         document.getElementById("id_name").defaultValue = myObj.name;
                         document.getElementById("id_birthday").defaultValue = myObj.birthday; 
                         document.getElementById("id_country").defaultValue = myObj.country; 
                         document.getElementById("id_organization").defaultValue = myObj.organization; 
                         document.getElementById("id_role").defaultValue = myObj.role; 
+
+                        document.getElementById("id_id").defaultValue = id; 
+
                         console.log(myObj.name);
                 console.log("Success update call");
                },

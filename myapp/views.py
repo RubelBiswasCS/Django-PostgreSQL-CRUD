@@ -77,6 +77,7 @@ def people(request):
 
 def add_record(request):
     # form = RecordForm()
+    pk = request.POST['pk']
     if request.method == 'POST':
         name = request.POST['name']
         birthday = request.POST['birthday']
@@ -84,8 +85,14 @@ def add_record(request):
         organization = request.POST['organization']
         role = request.POST['role']
 
-        p = People(name=name, birthday=birthday, country=country, organization=organization,role=role)
-        p.save()
+        obj, created = People.objects.update_or_create(
+            
+            pk=pk,
+    defaults={'name':name,'birthday':birthday,'country':country,'organization':organization,'role':role},
+
+)
+        # p = People(name=name, birthday=birthday, country=country, organization=organization,role=role)
+        # p.save()
 
     data={
         'status':'ok',
